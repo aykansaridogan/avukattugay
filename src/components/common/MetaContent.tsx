@@ -19,14 +19,14 @@ const MetaContent = () => {
       <meta property="og:type" content={seo.ogType || 'website'} />
       <meta property="og:title" content={seo.title} />
       <meta property="og:description" content={seo.description} />
-      <meta property="og:image" content={seo.ogImage} />
+      <meta property="og:image" content={`${window.location.origin}${seo.ogImage}`} />
       <meta property="og:url" content={window.location.href} />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={seo.title} />
       <meta name="twitter:description" content={seo.description} />
-      <meta name="twitter:image" content={seo.ogImage} />
+      <meta name="twitter:image" content={`${window.location.origin}${seo.ogImage}`} />
 
       {/* Language Meta */}
       <link rel="canonical" href={window.location.href} />
