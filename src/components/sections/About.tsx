@@ -8,12 +8,15 @@ const About = () => {
   return (
     <section id="about" style={{ backgroundColor: 'var(--bg-dark)' }}>
       <div className="container">
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', 
-          gap: '4rem',
-          alignItems: 'center'
-        }}>
+        <div 
+          className="grid-mobile-1"
+          style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))', 
+            gap: '3rem',
+            alignItems: 'center'
+          }}
+        >
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}

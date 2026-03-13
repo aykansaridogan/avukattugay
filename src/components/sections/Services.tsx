@@ -41,10 +41,11 @@ const Services = () => {
           whileInView="visible"
           viewport={{ once: false, margin: "-50px" }}
           variants={containerVariants}
+          className="grid-mobile-1"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2rem'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+            gap: '1.5rem'
           }}
         >
           {services.items.map((item: any, index: number) => {

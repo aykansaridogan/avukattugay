@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Menu, X } from 'lucide-react';
 import { useContent } from '../../context/ContentContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const { content } = useContent();
@@ -12,8 +12,10 @@ const Navbar = () => {
     return localStorage.getItem('announcementDismissed') !== 'true' && content.announcement?.active;
   });
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -28,6 +30,11 @@ const Navbar = () => {
     };
   }, []);
 
+  // Close menu on route change
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location]);
+
   return (
     <motion.div 
       initial={{ y: -100, x: '-50%', opacity: 0 }}
@@ -35,10 +42,10 @@ const Navbar = () => {
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
       style={{
         position: 'fixed',
-        top: (isScrolled || !isAnnouncementVisible) ? '1rem' : '4rem',
+        top: (isScrolled || !isAnnouncementVisible) ? '0.75rem' : '3.5rem',
         left: '50%',
         transform: 'translateX(-50%)',
-        width: '95%',
+        width: 'calc(100% - 1.5rem)',
         maxWidth: '1200px',
         zIndex: 1000,
         pointerEvents: 'none',
@@ -51,22 +58,22 @@ const Navbar = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: isScrolled ? '0.5rem 1.2rem' : '0.8rem 1.5rem',
+          padding: isScrolled ? '0.5rem 1rem' : '0.7rem 1.25rem',
           borderRadius: '100px',
-          backgroundColor: isScrolled ? 'rgba(10, 10, 10, 0.85)' : 'rgba(255, 255, 255, 0.03)',
+          backgroundColor: isScrolled ? 'rgba(10, 10, 10, 0.9)' : 'rgba(255, 255, 255, 0.05)',
           border: '1px solid rgba(197, 160, 89, 0.3)',
-          backdropFilter: 'blur(25px)',
-          WebkitBackdropFilter: 'blur(25px)',
+          backdropFilter: 'blur(30px)',
+          WebkitBackdropFilter: 'blur(30px)',
           pointerEvents: 'auto',
           boxShadow: isScrolled 
-            ? '0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 20px rgba(197, 160, 89, 0.1)' 
-            : '0 10px 30px -10px rgba(0, 0, 0, 0.3)',
+            ? '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 20px rgba(197, 160, 89, 0.15)' 
+            : '0 10px 30px -10px rgba(0, 0, 0, 0.4)',
           transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-          gap: '1rem'
+          gap: '0.5rem'
         }}
       >
         <motion.div 
-          style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+          style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', flexShrink: 0 }}
           whileHover={{ scale: 1.05 }}
           onClick={() => {
             navigate('/');
@@ -78,7 +85,7 @@ const Navbar = () => {
               src={navbar.logo} 
               alt="Logo" 
               style={{ 
-                height: isScrolled ? '36px' : '44px', 
+                height: isScrolled ? '32px' : '38px', 
                 width: 'auto',
                 filter: 'invert(1) brightness(1.2)',
                 mixBlendMode: 'screen',
@@ -173,7 +180,70 @@ const Navbar = () => {
             {navbar.cta}
           </motion.button>
         </div>
+
+        {/* Mobile Menu Toggle */}
+        <div className="mobile-toggle" style={{ display: 'none' }}>
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            style={{ color: 'white', padding: '0.5rem' }}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            style={{
+              position: 'absolute',
+              top: '110%',
+              left: 0,
+              right: 0,
+              background: 'rgba(10, 10, 10, 0.95)',
+              backdropFilter: 'blur(20px)',
+              borderRadius: '24px',
+              padding: '2rem',
+              border: '1px solid var(--border)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1.5rem',
+              zIndex: 999,
+              pointerEvents: 'auto'
+            }}
+          >
+            {navbar.links.map((link: any) => (
+              <Link 
+                key={link.name} 
+                to={`/${link.href}`}
+                style={{
+                  fontSize: '0.9rem',
+                  fontWeight: 600,
+                  color: 'white',
+                  textDecoration: 'none',
+                  padding: '1rem',
+                  borderRadius: '12px',
+                  background: 'rgba(255,255,255,0.03)',
+                  textAlign: 'center'
+                }}
+              >
+                {link.name}
+              </Link>
+            ))}
+            <button 
+              onClick={() => navigate('/contact')}
+              className="btn-primary"
+              style={{ width: '100%', borderRadius: '12px', padding: '1rem' }}
+            >
+              {navbar.cta}
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

@@ -13,7 +13,8 @@ const AppointmentForm = () => {
     const formData = new FormData(e.currentTarget);
     const submission = {
       id: Date.now(),
-      date: new Date().toLocaleString('tr-TR'),
+      submissionDate: new Date().toLocaleString('tr-TR'),
+      appointmentDate: formData.get('appointmentDate'),
       category: formData.get('category'),
       name: formData.get('firstName'),
       surname: formData.get('lastName'),
@@ -33,12 +34,15 @@ const AppointmentForm = () => {
   return (
     <section id="contact">
       <div className="container">
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-          gap: '4rem',
-          alignItems: 'start'
-        }}>
+        <div 
+          className="grid-mobile-1"
+          style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', 
+            gap: '3rem',
+            alignItems: 'start'
+          }}
+        >
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -116,6 +120,11 @@ const AppointmentForm = () => {
                         <option key={cat} value={cat}>{cat}</option>
                       ))}
                     </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Tercih Edilen Randevu Tarihi</label>
+                    <input name="appointmentDate" type="date" className="form-control" required min={new Date().toISOString().split('T')[0]} />
                   </div>
                   
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem' }}>

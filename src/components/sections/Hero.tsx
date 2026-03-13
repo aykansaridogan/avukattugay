@@ -75,10 +75,11 @@ const Hero = () => {
               hidden: { opacity: 0, x: -20 },
               visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any } }
             }}
-            style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}
+            className="hero-btns"
+            style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap' }}
           >
-            <a href="#contact" className="btn-primary">{hero.primaryBtn}</a>
-            <a href="#services" className="btn-outline">{hero.secondaryBtn}</a>
+            <a href="#contact" className="btn-primary" style={{ flex: 'unset' }}>{hero.primaryBtn}</a>
+            <a href="#services" className="btn-outline" style={{ flex: 'unset' }}>{hero.secondaryBtn}</a>
           </motion.div>
         </motion.div>
       </div>

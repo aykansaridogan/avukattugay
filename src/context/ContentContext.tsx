@@ -20,6 +20,10 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
         ...initialContent.seo,
         ...(savedData.seo || {})
       },
+      legal: {
+        ...initialContent.legal,
+        ...(savedData.legal || {})
+      },
       articles: {
         ...initialContent.articles,
         ...(savedData.articles || {}),

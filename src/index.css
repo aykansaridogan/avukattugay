@@ -25,6 +25,7 @@ body {
   color: var(--text-main);
   line-height: 1.6;
   overflow-x: hidden;
+  width: 100%;
 }
 
 h1, h2, h3, h4, .serif {
@@ -49,6 +50,7 @@ button {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  width: 100%;
 }
 
 section {
@@ -203,9 +205,88 @@ select.form-control option {
     font-size: 2.5rem;
   }
   .container {
-    padding: 0 1.5rem;
+    padding: 0 1.25rem;
   }
   .desktop-menu {
     display: none !important;
   }
+  .mobile-toggle {
+    display: block !important;
+  }
+  .section-header h2 {
+    font-size: 2.2rem;
+  }
+  section {
+    padding: 4rem 0;
+  }
+  /* Fix for grids and margins on small screens */
+  .grid-mobile-1 {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-only {
+    display: block !important;
+  }
+  /* Dashboard adjustments */
+  .dashboard-sidebar {
+    box-shadow: 20px 0 50px rgba(0,0,0,0.5);
+  }
+  .dashboard-content-wrapper {
+    margin-left: 0 !important;
+    padding: 1rem 0.75rem !important; /* Extremely minimal padding */
+  }
+  .glass {
+    padding: 1rem !important; /* Override inline styles for mobile */
+    border-radius: 12px !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+  .btn-primary, .btn-outline {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+  }
+  .hero-btns {
+    width: 100%;
+  }
+}
+
+.desktop-only {
+  display: block;
+}
+.mobile-only {
+  display: none;
+}
+.text-nowrap {
+  white-space: nowrap;
+}
+
+/* Custom Scrollbar for better aesthetics */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  opacity: 0.3;
+  border-radius: 10px;
+}
+
+/* Calendar Button Hover */
+.calendar-day-btn:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  transform: translateY(-2px);
+  border-color: rgba(197, 160, 89, 0.5) !important;
 }
